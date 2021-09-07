@@ -12,14 +12,19 @@ const presonSchema = new Schema({
 
 let Person = mongoose.model("Person", presonSchema);
 
-let p1 = new Person({name: "atul", age: 23, favoriteFoods: ["apple", "milk", "fish"]});
-
-//p1._id instanceof mongoose.Types.ObjectId;
-
-console.log(p1.favoriteFoods);
-
+// To create a new person instance in createAndSavePerson function
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  let p1 = new Person({name: "Atul Mandavkar", age: 29, favoriteFoods: ["Eggs", "Milk", "Paneer", "fruits"]});
+  
+  p1.save(function(err, data){
+    if(err){
+      console.log(err);
+    }
+    else{
+      done(null, data);
+      // data of p1 is not available in mongoose clustor in altas because in server.js, in function createAndSavePerson it is removed by .remove() method
+    }
+  })
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
