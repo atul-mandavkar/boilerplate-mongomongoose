@@ -27,7 +27,7 @@ const createAndSavePerson = (done) => {
   })
 };
 
-var arrayOfPeople = [{name: "Ruhii Singh", age: 22, favoriteFoods: ["Milkshakes", "Ice-cream", "Fruits", "Salads"]}, {name: "Shivangi Joshi", age: 27, favoriteFoods: ["Chocolate", "Cake", "Ice-creams", "Juices"]}];
+var arrayOfPeople = [{name: "Ruhii Singh", age: 22, favoriteFoods: ["Milkshakes", "Ice-cream", "Fruits", "Salads"]}, {name: "Shivangi Joshi", age: 27, favoriteFoods: ["Chocolate", "Cake", "Ice-creams", "Juices"]}, {name: "Harsh Rane", age: 34, favoriteFoods: ["Salads", "Milk", "Vegetables"]}];
 
 const createManyPeople = (arrayOfPeople, done) => {
   Person.create(arrayOfPeople, function(err, data){
@@ -42,7 +42,15 @@ const createManyPeople = (arrayOfPeople, done) => {
 };
 
 const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
+  Person.find({name: personName}, function(err, data){
+    if(err){
+      console.log(err);
+    }
+    else{
+      done(null, data);
+    }
+  })
+  //done(null /*, data*/);
 };
 
 const findOneByFood = (food, done) => {
