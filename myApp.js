@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 var mongoose = require("mongoose");
 
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -14,7 +14,7 @@ let Person = mongoose.model("Person", presonSchema);
 
 // To create a new person instance in createAndSavePerson function
 const createAndSavePerson = (done) => {
-  let p1 = new Person({name: "Atul Mandavkar", age: 29, favoriteFoods: ["Eggs", "Milk", "Paneer", "fruits"]});
+  let p1 = new Person({name: "Atul Mandavkar", age: 29, favoriteFoods: ["Eggs", "Milk", "Paneer", "Fruits"]});
   
   p1.save(function(err, data){
     if(err){
@@ -27,8 +27,18 @@ const createAndSavePerson = (done) => {
   })
 };
 
+var arrayOfPeople = [{name: "Ruhii Singh", age: 22, favoriteFoods: ["Milkshakes", "Ice-cream", "Fruits", "Salads"]}, {name: "Shivangi Joshi", age: 27, favoriteFoods: ["Chocolate", "Cake", "Ice-creams", "Juices"]}];
+
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Person.create(arrayOfPeople, function(err, data){
+    if(err){
+      console.log(err);
+    }
+    else{
+      done(null, data);
+    }
+  })
+  //done(null /*, data*/);
 };
 
 const findPeopleByName = (personName, done) => {
